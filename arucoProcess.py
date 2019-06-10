@@ -53,7 +53,7 @@ with open(current_path + './test_dir/' + 'fpsRecord.yml', 'r') as f:
     plt.xlabel(u'时间/s', fontproperties="SimHei")
     plt.savefig("camera_x.png")
 
-
+# 未经滤波的原始数据
 with open('E:/code/visualLocalization/visualLocalization/fpsRecord1-o.yml', 'r') as originf_o:
     origin_data = originf_o.read()
     subYaml = origin_data.split('\n')
