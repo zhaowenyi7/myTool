@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 current_path = os.path.abspath(os.path.dirname(__file__))
 print(current_path)
 print(current_path + './test_dir')
-
-with open('E:/code/visualLocalization/visualLocalization/fpsRecord_test_o.yml', 'r') as originf:
+origin_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_test_o.yml'
+kalman_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_kalman.yml'
+with open(kalman_path, 'r') as originf:
     origin_data = originf.read()
     subYaml = origin_data.split('\n')
     with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'w') as wf:
