@@ -44,14 +44,14 @@ with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
     plt.xlabel(u'时间/s', fontproperties="SimHei")
     plt.savefig("axis_z.png")
 
-    h = axis_mat[:, 0] * 1000  # 转化为毫米
-    h_0 = np.max(h)  # 零位（最高点）
-    h_max_axis = np.min(h)  # 最大挠度（最低点）
-    h_max_trans = h_0 - h_max_axis  # 最大位移（极差）
-    plt.figure()
-    plt.plot(xMat, h_0 - h)
-    plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
-    plt.ylabel(u'水平方向坐标/mm', fontproperties="SimHei")
-    plt.xlabel(u'时间/s', fontproperties="SimHei")
-    plt.savefig("axis_x.png")
+    # h = axis_mat[:, 0] * 1000  # 转化为毫米
+    # h_0 = np.max(h)  # 零位（最高点）
+    # h_max_axis = np.min(h)  # 最大挠度（最低点）
+    # h_max_trans = h_0 - h_max_axis  # 最大位移（极差）
+    # plt.figure()
+    # plt.plot(xMat, h_0 - h)
+    # plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
+    # plt.ylabel(u'水平方向坐标/mm', fontproperties="SimHei")
+    # plt.xlabel(u'时间/s', fontproperties="SimHei")
+    # plt.savefig("axis_x.png")
 
