@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 current_path = os.path.abspath(os.path.dirname(__file__))
 print(current_path)
 print(current_path + './test_dir')
-origin_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_test_o.yml'
+origin_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_origin.yml'
 kalman_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_kalman.yml'
 with open(kalman_path, 'r') as originf:
     origin_data = originf.read()
