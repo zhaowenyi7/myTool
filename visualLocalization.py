@@ -2,12 +2,14 @@ import os
 import yaml
 import numpy as np
 import matplotlib.pyplot as plt
+import datetime
+import collections
 
 current_path = os.path.abspath(os.path.dirname(__file__))
 print(current_path)
 print(current_path + './test_dir')
 origin_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_origin.yml'
-kalman_path = 'E:/code/visualLocalization/visualLocalization/fpsRecord_kalman.yml'
+kalman_path = 'E:/out/fpsRecord_kalman.yml'
 with open(kalman_path, 'r') as originf:
     origin_data = originf.read()
     subYaml = origin_data.split('\n')
@@ -19,8 +21,9 @@ with open(kalman_path, 'r') as originf:
             i += 1
 
 with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
-    temp = yaml.load(f.read(), Loader=yaml.FullLoader)
-    keys = temp.keys()
+    temp = yaml.load(f.read())
+    temp = collections.OrderedDict(temp)
+    keys = list(temp.keys())
     values = temp.values()
     axis = []
     for val in values:
@@ -28,6 +31,7 @@ with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
 
     # print(axis)
     # print(np.shape(axis))
+    name = keys[0].split("_")[1]
     axis_mat = np.mat(axis)
     z = axis_mat[:, 2] * 1000  # 转化为毫米
     z_0 = np.max(z)  # 零位（最高点）
@@ -42,7 +46,7 @@ with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
     plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
     plt.ylabel(u'竖直方向坐标/mm', fontproperties="SimHei")
     plt.xlabel(u'时间/s', fontproperties="SimHei")
-    plt.savefig("axis_z.png")
+    plt.savefig('E:/out/axis_z_' + name + '.png')
 
     # h = axis_mat[:, 0] * 1000  # 转化为毫米
     # h_0 = np.max(h)  # 零位（最高点）
@@ -55,3 +59,4 @@ with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
     # plt.xlabel(u'时间/s', fontproperties="SimHei")
     # plt.savefig("axis_x.png")
 
+os.rename(kalman_path, 'E:/out/fpsRecord_kalman_' + name + '.yml')
