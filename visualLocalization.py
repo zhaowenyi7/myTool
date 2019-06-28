@@ -2,9 +2,11 @@ import os
 import yaml
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import datetime
 import collections
 
+yaml.warnings({'YAMLLoadWarning': False})
 current_path = os.path.abspath(os.path.dirname(__file__))
 print(current_path)
 print(current_path + './test_dir')
@@ -22,6 +24,7 @@ with open(kalman_path, 'r') as originf:
 
 with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
     temp = yaml.load(f.read())
+    # temp = yaml.load(f.read(), Loader=yaml.safe_load)
     temp = collections.OrderedDict(temp)
     keys = list(temp.keys())
     values = temp.values()
@@ -39,13 +42,13 @@ with open(current_path + './test_dir/' + 'fpsRecord_test.yml', 'r') as f:
     z_max_trans = z_0 - z_max_axis  # 最大位移（极差）
 
     x = [n for n in range(1, z.shape[0] + 1)]
-    xMat = np.mat(x).T * 0.2  # 数组转矩阵，数值操作
+    xMat = np.mat(x).T  # 数组转矩阵，数值操作
 
     plt.figure()
     plt.plot(xMat, z - z_0)
     plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
     plt.ylabel(u'竖直方向坐标/mm', fontproperties="SimHei")
-    plt.xlabel(u'时间/s', fontproperties="SimHei")
+    plt.xlabel(u'采样时间', fontproperties="SimHei")
     plt.savefig('E:/out/axis_z_' + name + '.png')
 
     # h = axis_mat[:, 0] * 1000  # 转化为毫米
