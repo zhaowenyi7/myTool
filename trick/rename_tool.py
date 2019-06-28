@@ -1,7 +1,7 @@
 import os
 import re
 
-dir_path = 'E:/data/0528/001_test/'
+dir_path = 'E:/data/'
 
 
 def sub_replace(fpath):
