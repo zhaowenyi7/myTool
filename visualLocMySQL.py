@@ -30,7 +30,7 @@ try:
         plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
         plt.ylabel(u'竖直方向坐标/mm', fontproperties="SimHei")
         plt.xlabel(u'采样时间', fontproperties="SimHei")
-        plt.savefig('E:/out/axis_z_' + xAxis[0] + '.png')
+        plt.savefig('E:/out/axis_z_measured' + xAxis[0] + '.png')
 finally:
     connection.close()
 
