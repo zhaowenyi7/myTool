@@ -28,7 +28,7 @@ try:
         plt.figure()
         plt.plot(xMat, yAxis)
         plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
-        plt.ylabel(u'竖直方向坐标/mm', fontproperties="SimHei")
+        plt.ylabel(u'竖直方向坐标/m', fontproperties="SimHei")
         plt.xlabel(u'采样时间', fontproperties="SimHei")
         plt.savefig('E:/out/axis_z_measured' + xAxis[0] + '.png')
 finally:
@@ -60,7 +60,7 @@ try:
         plt.figure()
         plt.plot(xMat, yAxis)
         plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
-        plt.ylabel(u'竖直方向坐标/mm', fontproperties="SimHei")
+        plt.ylabel(u'竖直方向坐标/m', fontproperties="SimHei")
         plt.xlabel(u'采样时间', fontproperties="SimHei")
         plt.savefig('E:/out/axis_z_corrected_' + xAxis[0] + '.png')
 finally:
