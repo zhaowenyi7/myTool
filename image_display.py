@@ -2,7 +2,7 @@ import glob
 import cv2
 
 
-file_directory = 'E:\\data\\0718'
+file_directory = 'E:\\data\\0719-200-left'
 file_type = '.bmp'
 if __name__ == '__main__':
     file_name_list = glob.glob(file_directory + '/*' + file_type)
