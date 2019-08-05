@@ -14,14 +14,18 @@ https://blog.csdn.net/xq920831/article/details/86715186
 # psd2.as_PIL().save('psd_image_to_detect2.png')
 # 2) 以灰度图的形式读入图片
 
-psd_img_1 = cv2.imread('psd_image_to_detect1.png', cv2.IMREAD_GRAYSCALE)
-psd_img_2 = cv2.imread('psd_image_to_detect2.png', cv2.IMREAD_GRAYSCALE)
+psd_img_1 = cv2.imread('F:\\test1.bmp', cv2.IMREAD_GRAYSCALE)
+psd_img_2 = cv2.imread('F:\\test1.bmp', cv2.IMREAD_GRAYSCALE)
 
 # 3) SIFT特征计算
-sift = cv2.xfeatures2d.SIFT_create()
+# sift = cv2.xfeatures2d.SIFT_create()
+# psd_kp1, psd_des1 = sift.detectAndCompute(psd_img_1, None)
+# psd_kp2, psd_des2 = sift.detectAndCompute(psd_img_2, None)
 
-psd_kp1, psd_des1 = sift.detectAndCompute(psd_img_1, None)
-psd_kp2, psd_des2 = sift.detectAndCompute(psd_img_2, None)
+# 3-2) SURF试验
+SURF = cv2.xfeatures2d_SURF.create()
+psd_kp1, psd_des1 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_1, None)
+psd_kp2, psd_des2 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_2, None)
 
 # 4) Flann特征匹配
 FLANN_INDEX_KDTREE = 1
@@ -37,10 +41,11 @@ for m, n in matches:
         goodMatch.append(m)
 # 增加一个维度
 goodMatch = np.expand_dims(goodMatch, 1)
-print(goodMatch[:20])
+# print(goodMatch[:20])
 
 img_out = cv2.drawMatchesKnn(psd_img_1, psd_kp1, psd_img_2, psd_kp2, goodMatch[:15], None, flags=2)
+img_out = cv2.resize(img_out, None, fx=0.25, fy=0.25)
 
-cv2.imshow('image', img_out)  # 展示图片
+cv2.imshow('+ FLANN', img_out)  # 展示图片
 cv2.waitKey(0)  # 等待按键按下
 cv2.destroyAllWindows()  # 清除所有窗口

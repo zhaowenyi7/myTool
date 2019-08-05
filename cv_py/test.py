@@ -1,19 +1,9 @@
-import cv2
-import numpy as np
+import tensorflow as tf
 
 
 if __name__ == '__main__':
-    img = np.array([
-        [0, 255, 0, 0],
-        [0, 0, 0, 255],
-        [0, 0, 0, 255],
-        [255, 0, 0, 0],
-        [255, 0, 0, 0]
-
-    ], np.uint8)
-    # cv2.imshow("1", img)
-    # cv2.waitKey()
-    cv2.getStructuringElement()
-
-    _, labels = cv2.connectedComponents(img)
-    print(1)
+    a = tf.constant([2.0, 2.0, 3.0], shape=[3], name='a')
+    b = tf.constant([1.0, 6.0, 3.0], shape=[3], name='b')
+    c = a + b
+    sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+    print(sess.run(c))

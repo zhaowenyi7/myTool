@@ -4,7 +4,8 @@ import numpy as np
 
 """http://zhaoxuhui.top/blog/2018/05/18/OpenCV_Contrib.html"""
 # 读取图像
-img0 = cv2.imread("E:\\data\\001test\\WIN.jpg")
+img0 = cv2.imread("F:\\test1.bmp")
+img0 = cv2.resize(img0, None, fx=0.25, fy=0.25)
 
 # 创建对象
 # 对于SIFT算子，可以通过nFeatures属性控制特征点数量
