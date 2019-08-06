@@ -27,25 +27,13 @@ SURF = cv2.xfeatures2d_SURF.create()
 psd_kp1, psd_des1 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_1, None)
 psd_kp2, psd_des2 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_2, None)
 
-# 4) Flann特征匹配
-FLANN_INDEX_KDTREE = 1
-index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-search_params = dict(checks=50)
+bf = cv2.BFMatcher_create(crossCheck=True)
+matches = bf.match(psd_des1, psd_des2)
+matches = sorted(matches, key=lambda x: x.distance)
 
-flann = cv2.FlannBasedMatcher(index_params, search_params)
-matches = flann.knnMatch(psd_des1, psd_des2, k=2)
-goodMatch = []
-for m, n in matches:
-    # goodMatch是经过筛选的优质配对，如果2个配对中第一匹配的距离小于第二匹配的距离的1/2，基本可以说明这个第一配对是两幅图像中独特的，不重复的特征点,可以保留。
-    if m.distance < 0.50 * n.distance:
-        goodMatch.append(m)
-# 增加一个维度
-goodMatch = np.expand_dims(goodMatch, 1)
-# print(goodMatch[:20])
-
-img_out = cv2.drawMatchesKnn(psd_img_1, psd_kp1, psd_img_2, psd_kp2, goodMatch[:15], None, flags=2)
+img_out = cv2.drawMatches(psd_img_1, psd_kp1, psd_img_2, psd_kp2, matches[:15], None, flags=cv2.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS)
 img_out = cv2.resize(img_out, None, fx=0.25, fy=0.25)
 
-cv2.imshow('+ FLANN', img_out)  # 展示图片
+cv2.imshow('no FLANN', img_out)  # 展示图片
 cv2.waitKey(0)  # 等待按键按下
 cv2.destroyAllWindows()  # 清除所有窗口

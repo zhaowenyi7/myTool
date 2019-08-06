@@ -14,8 +14,29 @@ https://blog.csdn.net/xq920831/article/details/86715186
 # psd2.as_PIL().save('psd_image_to_detect2.png')
 # 2) 以灰度图的形式读入图片
 
-psd_img_1 = cv2.imread('F:\\test1.bmp', cv2.IMREAD_GRAYSCALE)
-psd_img_2 = cv2.imread('F:\\test1.bmp', cv2.IMREAD_GRAYSCALE)
+psd_img_01 = cv2.imread('F:\\test\\2019-07-01-08-37-40-884.bmp', cv2.IMREAD_COLOR)
+psd_img_02 = cv2.imread('F:\\test\\2019-07-01-08-37-42-033.bmp', cv2.IMREAD_COLOR)
+psd_img_01 = psd_img_01[:, 2456:]
+psd_img_02 = psd_img_02[:, 2456:]
+
+psd_img_1 = cv2.cvtColor(psd_img_01, cv2.COLOR_RGB2GRAY)
+psd_img_2 = cv2.cvtColor(psd_img_02, cv2.COLOR_RGB2GRAY)
+
+y0 = 1400
+y1 = 2000
+x0 = 1044
+x1 = 1644
+roiImg = psd_img_2[y0:y1, x0:x1]
+# cv2.imshow("", roiImg)
+# cv2.waitKey()
+
+temp_img = np.zeros((psd_img_2.shape[0], psd_img_2.shape[1]), np.uint8)
+# temp_img.fill(255)
+# temp_img = psd_img_2
+temp_img[y0:y1, x0:x1] = roiImg
+# temp_img = cv2.resize(temp_img, None, fx=0.25, fy=0.25)
+# cv2.imshow("", temp_img)
+# cv2.waitKey()
 
 # 3) SIFT特征计算
 # sift = cv2.xfeatures2d.SIFT_create()
@@ -25,7 +46,7 @@ psd_img_2 = cv2.imread('F:\\test1.bmp', cv2.IMREAD_GRAYSCALE)
 # 3-2) SURF试验
 SURF = cv2.xfeatures2d_SURF.create()
 psd_kp1, psd_des1 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_1, None)
-psd_kp2, psd_des2 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, psd_img_2, None)
+psd_kp2, psd_des2 = cv2.xfeatures2d_SURF.detectAndCompute(SURF, temp_img, None)
 
 # 4) Flann特征匹配
 FLANN_INDEX_KDTREE = 1
@@ -43,9 +64,12 @@ for m, n in matches:
 goodMatch = np.expand_dims(goodMatch, 1)
 # print(goodMatch[:20])
 
-img_out = cv2.drawMatchesKnn(psd_img_1, psd_kp1, psd_img_2, psd_kp2, goodMatch[:15], None, flags=2)
-img_out = cv2.resize(img_out, None, fx=0.25, fy=0.25)
+psd_img_1 = cv2.rectangle(psd_img_01, (x0, y0), (x1, y1), (0, 0, 200,), 7)
+psd_img_2 = cv2.rectangle(psd_img_02, (x0, y0), (x1, y1), (0, 0, 200,), 7)
+img_out = cv2.drawMatchesKnn(psd_img_1, psd_kp1, psd_img_2, psd_kp2, goodMatch[:15], None, matchColor=(0, 255, 0), flags=cv2.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS)
+img_out2 = cv2.resize(img_out, None, fx=0.2, fy=0.2)
 
-cv2.imshow('+ FLANN', img_out)  # 展示图片
+cv2.imshow('+ FLANN', img_out2)  # 展示图片
 cv2.waitKey(0)  # 等待按键按下
 cv2.destroyAllWindows()  # 清除所有窗口
+cv2.imwrite("F:\\out\\surf_demo.bmp", img_out)
