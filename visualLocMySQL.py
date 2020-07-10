@@ -30,7 +30,8 @@ try:
         plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
         plt.ylabel(u'竖直方向坐标/m', fontproperties="SimHei")
         plt.xlabel(u'采样时间', fontproperties="SimHei")
-        plt.savefig('E:/out/axis_z_measured' + xAxis[0] + '.png')
+
+        plt.savefig('E:/out/axis_z_measured' + xAxis[0].replace(':', '-') + '.png')
 finally:
     connection.close()
 
@@ -46,6 +47,7 @@ try:
         sql = "SELECT `time`, `z_corrected` FROM `axis`"
         cursor.execute(sql)
         result = cursor.fetchall()
+        result = result[30:]
         xAxis = []
         yAxis = []
         for singleRec in result:
@@ -62,6 +64,6 @@ try:
         plt.title(u'目标点位移时程曲线', fontproperties="KaiTi", fontsize=20)
         plt.ylabel(u'竖直方向坐标/m', fontproperties="SimHei")
         plt.xlabel(u'采样时间', fontproperties="SimHei")
-        plt.savefig('E:/out/axis_z_corrected_' + xAxis[0] + '.png')
+        plt.savefig('E:/out/axis_z_corrected_' + xAxis[0].replace(':', '-') + '.png')
 finally:
     connection.close()
